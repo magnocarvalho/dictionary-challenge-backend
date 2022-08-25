@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { EntriesModule } from './entries/entries.module';
+import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { join } from 'path';
 import { EntriesEntity } from './entries/entity';
 import { UserEntity } from './user/entity';
 import { HistoryModule } from './history/history.module';
+import { AppController } from './app.controller';
+import { HistoryEntity } from './history/entity';
 
 @Module({
   imports: [
@@ -21,7 +21,7 @@ import { HistoryModule } from './history/history.module';
       // host: 'cluster0.f3z1zqw.mongodb.net',
       // port: 27017,
       database: 'projeto1',
-      entities: [EntriesEntity, UserEntity],
+      entities: [EntriesEntity, UserEntity, HistoryEntity],
       ssl: true,
       synchronize: true,
       useNewUrlParser: true,

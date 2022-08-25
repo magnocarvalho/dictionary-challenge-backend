@@ -1,9 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/user/entity';
 import { UserService } from 'src/user/user.service';
-import { Repository } from 'typeorm';
 import { AuthUserDto } from './dtos/auth-user.dto';
 import { SigninDto } from './dtos/signin.dto';
 import { SignupDto } from './dtos/signup.dto';
@@ -51,7 +49,8 @@ export class AuthService {
   private getAuthUserDto(userNew: UserEntity): AuthUserDto {
     const payload = {
       userId: userNew._id,
+      email: userNew.email,
     };
-    return { id: userNew._id, name: userNew.name, token: this.jwtService.sign(payload) };
+    return { id: userNew._id.toString(), name: userNew.name, token: this.jwtService.sign(payload) };
   }
 }

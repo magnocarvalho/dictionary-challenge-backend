@@ -6,20 +6,25 @@ import { EntriesDto } from './dtos';
 import { EntriesEntity } from './entity';
 import axios from 'axios';
 import { EntriesCreateDto } from './dtos/create-entries.dto';
+import { HistoryService } from 'src/history/history.service';
+import { UserService } from 'src/user/user.service';
 const API_DICTIONARY_URL = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
 
 @Injectable()
 export class EntriesService {
   constructor(
     @InjectRepository(EntriesEntity)
-    private entriesRepository: Repository<EntriesEntity>
+    private entriesRepository: Repository<EntriesEntity>,
+    private readonly historyService: HistoryService,
+    private readonly userService: UserService
   ) {}
 
   async getEntriesEn(pageOptionsDto: PageOptionsDto): Promise<PageDto<EntriesDto>> {
     return new PageDto([{ word: 'word' }], pageOptionsDto, 10);
   }
 
-  async getEntriesEnWord(word: string): Promise<any> {
+  async getEntriesEnWord(word: string, usuario: any): Promise<any> {
+    const user = await this.userService.findByEmail(usuario.email);
     const exisitngContact = await this.findOneByword(word);
 
     if (!exisitngContact) {
@@ -30,6 +35,7 @@ export class EntriesService {
           dictionary: data,
         };
         const entriesEntity = await this.create(entriesDto);
+        await this.historyService.createHistory(user, entriesEntity);
         return entriesEntity;
       } else {
         throw new NotFoundException('Word not Exist');

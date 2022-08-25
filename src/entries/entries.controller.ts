@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiPaginatedResponse } from 'src/common/decorators/api-paginated-response.decorator';
@@ -30,8 +30,8 @@ export class EntriesController {
   @Get('/en/:word')
   @UseGuards(AuthGuard())
   @ApiResponse({ status: 200, description: 'Retornar as informações da palavra especificada e registra o histórico de acesso.' })
-  async getEntriesEnWord(@Param('word') word: string): Promise<any> {
-    return this.entriesService.getEntriesEnWord(word);
+  async getEntriesEnWord(@Param('word') word: string, @Req() req: any): Promise<any> {
+    return this.entriesService.getEntriesEnWord(word, req.user);
   }
 
   @Post('/en/:word/favorite')

@@ -1,8 +1,9 @@
-import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, PreconditionFailedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SignupDto } from 'src/auth/dtos/signup.dto';
-import { Repository } from 'typeorm';
+
 import { UserEntity } from './entity';
+import { ObjectID, Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -27,6 +28,18 @@ export class UserService {
   }
 
   async findByEmail(email: string) {
-    return await this.userRepository.findOne({ where: { email } });
+    try {
+      return await this.userRepository.findOne({ where: { email } });
+    } catch (error) {
+      throw new PreconditionFailedException(error);
+    }
+  }
+
+  async findById(_id: string) {
+    try {
+      return await this.userRepository.findOne({ where: { _id: new ObjectID(_id) } });
+    } catch (error) {
+      throw new PreconditionFailedException(error);
+    }
   }
 }

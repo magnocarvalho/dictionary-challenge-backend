@@ -11,14 +11,12 @@ export class HistoryEntity {
   // @ManyToOne(() => UserEntity, (user: UserEntity) => user.history)
   // user: UserEntity;
   @Column()
-  @Index()
   userId: string;
 
   // @ManyToOne(() => EntriesEntity, (dictionary: EntriesEntity) => dictionary.history)
   // dictionary: EntriesEntity;
 
   @Column()
-  @Index()
   dictionaryId: string;
 
   @CreateDateColumn()

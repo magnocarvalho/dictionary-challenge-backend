@@ -1,16 +1,36 @@
-import { Entity, Column, ObjectIdColumn, BeforeInsert, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn, ObjectID, Index } from 'typeorm';
+import { EntriesEntity } from 'src/entries/entity';
+import { UserEntity } from 'src/user/entity';
+import { Entity, Column, ObjectIdColumn, BeforeInsert, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn, ObjectID, Index, OneToOne, JoinColumn } from 'typeorm';
 
 @Entity({ name: 'favorite' })
 export class FavoriteEntity {
   @ObjectIdColumn()
   _id: ObjectID;
 
+  // @Column()
+  // @Index()
+  // userId: string;
+
+  // @Column()
+  // @Index()
+  // dictionaryId: string;
+  // @OneToOne(() => UserEntity)
+  // @JoinColumn()
+  // user: UserEntity;
+
+  // @OneToOne(() => EntriesEntity)
+  // @JoinColumn()
+  // dictionary: EntriesEntity;
+  // @Column()
+  // @ManyToOne(() => UserEntity, (user: UserEntity) => user.history)
+  // user: UserEntity;
   @Column()
-  @Index()
   userId: string;
 
+  // @ManyToOne(() => EntriesEntity, (dictionary: EntriesEntity) => dictionary.history)
+  // dictionary: EntriesEntity;
+
   @Column()
-  @Index()
   dictionaryId: string;
 
   @CreateDateColumn()

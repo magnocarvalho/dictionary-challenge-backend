@@ -12,6 +12,7 @@ import { HistoryModule } from './history/history.module';
 import { AppController } from './app.controller';
 import { HistoryEntity } from './history/entity';
 import { FavoriteModule } from './favorite/favorite.module';
+import { FavoriteEntity } from './favorite/entity';
 
 @Module({
   imports: [
@@ -22,9 +23,9 @@ import { FavoriteModule } from './favorite/favorite.module';
       // host: 'cluster0.f3z1zqw.mongodb.net',
       // port: 27017,
       database: 'projeto1',
-      entities: [EntriesEntity, UserEntity, HistoryEntity],
+      entities: [EntriesEntity, UserEntity, HistoryEntity, FavoriteEntity],
       ssl: true,
-      synchronize: true,
+      synchronize: false,
       useNewUrlParser: true,
       logging: true,
     }),

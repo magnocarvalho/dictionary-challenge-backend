@@ -9,6 +9,7 @@ import { HistoryEntity } from 'src/history/entity/history.entity';
 export class EntriesEntity implements IEntries {
   @ObjectIdColumn()
   _id: ObjectID;
+
   @Column({
     nullable: false,
     length: 50,

@@ -36,13 +36,13 @@ export class EntriesController {
 
   @Post('/en/:word/favorite')
   @UseGuards(AuthGuard())
-  async postFavoriteWord(@Param('word') word: string): Promise<any> {
-    return this.entriesService.postFavoriteWord(word);
+  async postFavoriteWord(@Param('word') word: string, @Req() req: any): Promise<any> {
+    return this.entriesService.postFavoriteWord(word, req.user);
   }
 
   @Delete('/en/:word/unfavorite')
   @UseGuards(AuthGuard())
-  async postUnfavoriteWord(@Param('word') word: string): Promise<any> {
-    return this.entriesService.postUnfavoriteWord(word);
+  async postUnfavoriteWord(@Param('word') word: string, @Req() req: any): Promise<any> {
+    return this.entriesService.postUnfavoriteWord(word, req.user);
   }
 }

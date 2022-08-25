@@ -1,8 +1,9 @@
 import { EntriesEntity } from 'src/entries/entity';
 import { UserEntity } from 'src/user/entity';
-import { Entity, Column, ObjectIdColumn, BeforeInsert, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn, ObjectID, Index } from 'typeorm';
+import { Entity, Column, ObjectIdColumn, BeforeInsert, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn, ObjectID, Index, Unique } from 'typeorm';
 
 @Entity({ name: 'history' })
+@Unique(['userId', 'dictionaryId'])
 export class HistoryEntity {
   @ObjectIdColumn()
   _id: ObjectID;

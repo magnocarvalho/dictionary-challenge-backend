@@ -6,21 +6,35 @@ import { UserEntity } from './entity';
 import { ObjectID, Repository } from 'typeorm';
 import { AuthenticatedUser, UserAuth } from 'src/common/interfaces/user.interface';
 import { ProfileDto } from 'src/auth/dtos/profile.dto';
+import { PageDto, PageOptionsDto } from 'src/common/dtos';
+import { HistoryService } from 'src/history/history.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>
+    private userRepository: Repository<UserEntity>,
+    private readonly historyService: HistoryService
   ) {}
   async getProfile(user: UserAuth): Promise<ProfileDto> {
     const me = await this.findByEmail(user?.email);
     delete me.password;
     return me as ProfileDto;
   }
-
-  async getProfileHistory(user: UserAuth): Promise<any> {
-    return await this.findByEmail(user?.email);
+  // async getEntriesEn(pageOptionsDto: PageOptionsDto): Promise<PageDto<EntriesDto>> {
+  //   const [listagem, qtd] = await this.entriesRepository.findAndCount({
+  //     order: {
+  //       createdAt: pageOptionsDto.order || 'DESC',
+  //     },
+  //     skip: pageOptionsDto.page,
+  //     take: pageOptionsDto.limit,
+  //   });
+  //   return new PageDto(listagem, pageOptionsDto, qtd);
+  // }
+  async getProfileHistory(user: UserAuth, pageOptionsDto: PageOptionsDto): Promise<PageDto<any>> {
+    const me = await this.findByEmail(user?.email);
+    const { listagem, qtd } = await this.historyService.getFavorites(me._id.toString(), pageOptionsDto);
+    return new PageDto(listagem, pageOptionsDto, qtd);
   }
   async getProfileFavorites(user: UserAuth): Promise<any> {
     return (await this.findByEmail(user?.email)) as ProfileDto;

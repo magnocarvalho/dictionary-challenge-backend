@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PageDto, PageOptionsDto } from 'src/common/dtos';
 import { Repository } from 'typeorm';
@@ -72,10 +72,20 @@ export class EntriesService {
   }
 
   async postUnfavoriteWord(word: string, usuario: UserAuth): Promise<any> {
-    return {
-      word,
-      description: 'This is the Entries page',
-    };
+    const me = await this.userService.findByEmail(usuario?.email);
+    if (!me) {
+      throw new UnauthorizedException('User not auth');
+    }
+    const exisitngWord = await this.findOneByword(word);
+    if (!exisitngWord) {
+      throw new NotFoundException('Word not Exist');
+    }
+    const favorite = await this.historyService.findFavorite2Remove(me._id.toString(), exisitngWord._id.toString());
+    return favorite;
+  }
+
+  async getEntriesList(list): Promise<any[]> {
+    return [];
   }
 
   private async findOneByword(word: string): Promise<EntriesEntity> {

@@ -1,10 +1,12 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PageDto, PageOptionsDto } from 'src/common/dtos';
 import { UserAuth } from 'src/common/interfaces/user.interface';
 import { EntriesDto } from 'src/entries/dtos';
 import { EntriesEntity } from 'src/entries/entity';
+import { EntriesService } from 'src/entries/entries.service';
 import { UserEntity } from 'src/user/entity';
-import { Repository } from 'typeorm';
+import { DeleteResult, ObjectID, Repository } from 'typeorm';
 import { HistoryEntity } from './entity';
 
 @Injectable()
@@ -21,5 +23,43 @@ export class HistoryService {
     } catch (error) {
       throw new ConflictException(error);
     }
+  }
+
+  async findFavorite2Remove(userId: string, dictionaryId: string): Promise<DeleteResult> {
+    try {
+      const historyResult = await this.historyRepository.findOne({ where: { userId, dictionaryId: dictionaryId } });
+      if (!historyResult) {
+        throw new NotFoundException('History not found');
+      }
+      const histDeletado = await this.historyRepository.delete(historyResult._id);
+      return histDeletado;
+    } catch (error) {
+      throw new NotFoundException(error);
+    }
+  }
+  /**
+   * get favoritos
+   *
+   * @param {string} userId
+   * @param {PageOptionsDto} pageOptionsDto
+   * @return {*}  {Promise<PageDto<HistoryEntity>>}
+   * @memberof HistoryService
+   */
+  async getFavorites(userId: string, pageOptionsDto: PageOptionsDto): Promise<{ listagem: HistoryEntity[]; qtd: number }> {
+    const [listagem, qtd] = await this.historyRepository.findAndCount({
+      order: {
+        createdAt: pageOptionsDto.order || 'DESC',
+      },
+      where: { userId },
+      skip: pageOptionsDto.page,
+      take: pageOptionsDto.limit,
+    });
+    /** gambiarra =/ o typeORM e pessimo com MongoBD */
+
+    // eu ja tenho a listagem de favoritos com id vou trazer o valor com o findOne mesmo
+    // const listagem = await this.historyRepository.find({ where: { userId } });
+    // const listagem2 = await this.entriesService.getEntriesList(listagem);
+    // return new PageDto(listagem2, pageOptionsDto, qtd);
+    return { listagem: listagem, qtd };
   }
 }

@@ -6,7 +6,7 @@ import { UserEntity } from './entity';
 import { HistoryModule } from 'src/history/history.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity])],
+  imports: [TypeOrmModule.forFeature([UserEntity]), HistoryModule],
   providers: [UserService],
   controllers: [UserController],
   exports: [UserService],

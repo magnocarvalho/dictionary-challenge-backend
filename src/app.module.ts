@@ -25,7 +25,7 @@ import { FavoriteEntity } from './favorite/entity';
       database: 'projeto1',
       entities: [EntriesEntity, UserEntity, HistoryEntity, FavoriteEntity],
       ssl: true,
-      synchronize: false,
+      synchronize: true,
       useNewUrlParser: true,
       logging: true,
     }),

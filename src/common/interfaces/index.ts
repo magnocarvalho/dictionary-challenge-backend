@@ -1,2 +1,2 @@
 export * from './page-meta-dto-parameters.interface';
-export * from './dictionary.interface';
+export * from './message.interface';

@@ -1,6 +1,7 @@
 import { Entity, Column, ObjectIdColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { IDictionary } from 'src/common/interfaces';
-import { IEntries } from 'src/common/interfaces/entries.interface';
+
+import { IEntries } from 'src/entries/interface/entries.interface';
+import { IDictionary } from '../interface';
 // import { IDictionary } from '../interfaces/dictionary.interface';
 
 @Entity({ name: 'entries' })

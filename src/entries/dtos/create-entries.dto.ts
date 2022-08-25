@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ArrayMinSize, IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { IDictionary } from 'src/common/interfaces';
+import { IDictionary } from '../interface';
+
 export class EntriesCreateDto {
   @ApiProperty()
   @IsNotEmpty()

@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { signupDto } from 'src/auth/dtos/signup.dto';
+import { SignupDto } from 'src/auth/dtos/signup.dto';
 import { Repository } from 'typeorm';
 import { UserEntity } from './entity';
 
@@ -17,9 +17,12 @@ export class UserService {
     };
   }
 
-  private async create(newUser: signupDto): Promise<UserEntity> {
-    const entriesEntity = this.userRepository.create(newUser);
-
-    return await this.userRepository.save(entriesEntity);
+  async create(newUser: SignupDto): Promise<UserEntity> {
+    try {
+      const entriesEntity = this.userRepository.create(newUser);
+      return await this.userRepository.save(entriesEntity);
+    } catch (error) {
+      throw new ConflictException(error);
+    }
   }
 }

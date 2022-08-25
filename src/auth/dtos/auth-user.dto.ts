@@ -2,9 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class AuthUserDto {
   @ApiProperty()
-  id: string;
+  readonly id: string;
   @ApiProperty()
-  name: string;
+  readonly name: string;
   @ApiProperty()
   token: string;
 }

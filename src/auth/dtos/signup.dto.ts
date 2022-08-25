@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ArrayMinSize, IsArray, IsNotEmpty, IsOptional, IsString, IsEmail, Min, Max, Length } from 'class-validator';
 
-export class signupDto {
+export class SignupDto {
   @ApiProperty()
   @IsNotEmpty()
   readonly name: string;

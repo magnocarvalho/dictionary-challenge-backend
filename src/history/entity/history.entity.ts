@@ -1,17 +1,25 @@
 import { EntriesEntity } from 'src/entries/entity';
 import { UserEntity } from 'src/user/entity';
-import { Entity, Column, ObjectIdColumn, BeforeInsert, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, ObjectIdColumn, BeforeInsert, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn, ObjectID, Index } from 'typeorm';
 
 @Entity({ name: 'history' })
 export class HistoryEntity {
   @ObjectIdColumn()
-  _id: string;
+  _id: ObjectID;
 
-  @ManyToOne(() => UserEntity, (author: UserEntity) => author.history)
-  public user: UserEntity;
+  // @Column()
+  // @ManyToOne(() => UserEntity, (user: UserEntity) => user.history)
+  // user: UserEntity;
+  @Column()
+  @Index()
+  userId: string;
 
-  @ManyToOne(() => EntriesEntity, (dictionary: EntriesEntity) => dictionary.history)
-  public dictionary: EntriesEntity;
+  // @ManyToOne(() => EntriesEntity, (dictionary: EntriesEntity) => dictionary.history)
+  // dictionary: EntriesEntity;
+
+  @Column()
+  @Index()
+  dictionaryId: string;
 
   @CreateDateColumn()
   public createdAt;

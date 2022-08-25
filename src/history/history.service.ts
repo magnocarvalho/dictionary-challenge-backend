@@ -16,7 +16,7 @@ export class HistoryService {
 
   async createHistory(user: UserEntity, dictionary: EntriesEntity): Promise<void> {
     try {
-      const historyEntity = this.historyRepository.create({ user, dictionary });
+      const historyEntity = this.historyRepository.create({ userId: user._id.toString(), dictionaryId: dictionary._id.toString() });
       await this.historyRepository.save(historyEntity);
     } catch (error) {
       throw new ConflictException(error);

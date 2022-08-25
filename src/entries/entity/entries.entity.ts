@@ -1,4 +1,4 @@
-import { Entity, Column, ObjectIdColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Entity, Column, ObjectIdColumn, CreateDateColumn, UpdateDateColumn, OneToMany, ObjectID } from 'typeorm';
 
 import { IEntries } from 'src/entries/interface/entries.interface';
 import { IDictionary } from '../interface';
@@ -8,7 +8,7 @@ import { HistoryEntity } from 'src/history/entity/history.entity';
 @Entity({ name: 'entries' })
 export class EntriesEntity implements IEntries {
   @ObjectIdColumn()
-  _id: string;
+  _id: ObjectID;
   @Column({
     nullable: false,
     length: 50,
@@ -25,6 +25,6 @@ export class EntriesEntity implements IEntries {
   @UpdateDateColumn()
   public updatedAt;
 
-  @OneToMany(() => HistoryEntity, (hist: HistoryEntity) => hist.user)
-  public history: HistoryEntity[];
+  // @OneToMany(() => HistoryEntity, (hist: HistoryEntity) => hist.user)
+  // public history: HistoryEntity[];
 }

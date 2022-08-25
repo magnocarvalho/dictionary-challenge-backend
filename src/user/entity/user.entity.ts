@@ -1,4 +1,4 @@
-import { Entity, Column, ObjectIdColumn, BeforeInsert, OneToMany, CreateDateColumn, UpdateDateColumn, ObjectID } from 'typeorm';
+import { Entity, Column, ObjectIdColumn, BeforeInsert, OneToMany, CreateDateColumn, UpdateDateColumn, ObjectID, Index } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { HistoryEntity } from 'src/history/entity';
 
@@ -22,8 +22,8 @@ export class UserEntity {
     return bcrypt.compare(password, this.password);
   }
 
-  @OneToMany(() => HistoryEntity, (hist: HistoryEntity) => hist.user)
-  public history: HistoryEntity[];
+  // @OneToMany(() => HistoryEntity, (hist: HistoryEntity) => hist.user)
+  // public history: HistoryEntity[];
 
   @CreateDateColumn()
   public createdAt;

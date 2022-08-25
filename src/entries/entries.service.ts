@@ -41,7 +41,7 @@ export class EntriesService {
         throw new NotFoundException('Word not Exist');
       }
     }
-
+    await this.historyService.createHistory(user, exisitngContact);
     return exisitngContact;
   }
 

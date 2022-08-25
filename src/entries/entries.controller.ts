@@ -10,6 +10,13 @@ import { EntriesService } from './entries.service';
 export class EntriesController {
   constructor(private readonly entriesService: EntriesService) {}
 
+  /**
+   * Method to get all Entries with filter.
+   *
+   * @param {PageOptionsDto} pageOptionsDto
+   * @return {*}  {Promise<PageDto<EntriesDto>>}
+   * @memberof EntriesController
+   */
   @Get('/en')
   @HttpCode(HttpStatus.OK)
   @ApiPaginatedResponse(EntriesDto)

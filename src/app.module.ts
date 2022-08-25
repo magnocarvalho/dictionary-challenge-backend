@@ -8,8 +8,8 @@ import { EntriesModule } from './entries/entries.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { join } from 'path';
-import { Entries } from './entries/entity';
-import { User } from './user/entity';
+import { EntriesEntity } from './entries/entity';
+import { UserEntity } from './user/entity';
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import { User } from './user/entity';
       // host: 'cluster0.f3z1zqw.mongodb.net',
       // port: 27017,
       database: 'projeto1',
-      entities: [Entries, User],
+      entities: [EntriesEntity, UserEntity],
       ssl: true,
       synchronize: true,
       useNewUrlParser: true,

@@ -1,7 +1,9 @@
 import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBasicAuth, ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ProfileDto } from 'src/auth/dtos/profile.dto';
 import { JwtAuthGuard } from 'src/auth/jwt';
+import { AuthenticatedUser } from 'src/common/interfaces/user.interface';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -13,22 +15,22 @@ export class UserController {
   @Get('/me')
   @UseGuards(JwtAuthGuard)
   @ApiResponse({ status: 200, description: 'Retornar o perfil do usúario' })
-  async getProfile(@Req() req: any): Promise<any> {
-    return req.user;
-    // return await this.userService.getProfile();
+  async getProfile(@Req() req: any): Promise<ProfileDto> {
+    // return req.user;
+    return await this.userService.getProfile(req?.user);
   }
 
   @Get('/me/history')
   @UseGuards(JwtAuthGuard)
   @ApiResponse({ status: 200, description: 'Retornar a lista de palavras visitadas' })
   async getProfileHistory(@Req() req: any): Promise<any> {
-    return this.userService.getProfile();
+    return await this.userService.getProfileHistory(req?.user);
   }
 
   @Get('/me/favorites')
   @UseGuards(JwtAuthGuard)
   @ApiResponse({ status: 200, description: 'Retornar a lista de palavras marcadas como favoritas' })
-  async getProfileFavorites(): Promise<any> {
-    return this.userService.getProfile();
+  async getProfileFavorites(@Req() req: any): Promise<any> {
+    return this.userService.getProfileFavorites(req?.user);
   }
 }

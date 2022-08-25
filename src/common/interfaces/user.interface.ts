@@ -4,6 +4,8 @@ export type UserAuth = {
 };
 
 export type AuthenticatedUser = {
-  id: string;
   email: string;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
 };

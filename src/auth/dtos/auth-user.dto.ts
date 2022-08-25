@@ -6,5 +6,5 @@ export class AuthUserDto {
   @ApiProperty()
   readonly name: string;
   @ApiProperty()
-  token: string;
+  token?: string;
 }

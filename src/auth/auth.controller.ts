@@ -19,10 +19,6 @@ export class AuthController {
   @Post('/signin')
   @UsePipes(ValidationPipe)
   async signin(@Body() bodyUser: SigninDto): Promise<AuthUserDto> {
-    return {
-      'id': 'f3a10cec013ab2c1380acef',
-      'name': 'User 1',
-      'token': 'Bearer JWT.Token',
-    };
+    return await this.authService.signin(bodyUser);
   }
 }

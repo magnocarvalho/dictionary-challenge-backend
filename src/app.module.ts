@@ -11,6 +11,7 @@ import { UserEntity } from './user/entity';
 import { HistoryModule } from './history/history.module';
 import { AppController } from './app.controller';
 import { HistoryEntity } from './history/entity';
+import { FavoriteModule } from './favorite/favorite.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { HistoryEntity } from './history/entity';
     UserModule,
     AuthModule,
     HistoryModule,
+    FavoriteModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -13,8 +13,8 @@ export class EntriesController {
   @Get('/en')
   @HttpCode(HttpStatus.OK)
   @ApiPaginatedResponse(EntriesDto)
-  async getEntriesEn(@Query() pageOptionsDto: PageOptionsDto): Promise<PageDto<any>> {
-    return this.entriesService.getEntriesEn();
+  async getEntriesEn(@Query() pageOptionsDto: PageOptionsDto): Promise<PageDto<EntriesDto>> {
+    return this.entriesService.getEntriesEn(pageOptionsDto);
   }
 
   @Get('/en/:word')

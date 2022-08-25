@@ -25,4 +25,8 @@ export class UserService {
       throw new ConflictException(error);
     }
   }
+
+  async findByEmail(email: string) {
+    return await this.userRepository.findOne({ where: { email } });
+  }
 }

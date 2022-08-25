@@ -13,12 +13,7 @@ export class AuthController {
   @Post('/signup')
   @UsePipes(ValidationPipe)
   async signup(@Body() bodyUser: SignupDto): Promise<AuthUserDto> {
-    this.authService.signup(bodyUser);
-    return {
-      'id': 'f3a10cec013ab2c1380acef',
-      'name': 'User 1',
-      'token': 'Bearer JWT.Token',
-    };
+    return await this.authService.signup(bodyUser);
   }
 
   @Post('/signin')

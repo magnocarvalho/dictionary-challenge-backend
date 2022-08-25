@@ -4,12 +4,15 @@ import { ArrayMinSize, IsArray, IsNotEmpty, IsOptional, IsString, IsEmail, Min, 
 export class signupDto {
   @ApiProperty()
   @IsNotEmpty()
-  name: string;
+  readonly name: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Has to be a valid email address',
+    example: 'email@email.com',
+  })
   @IsNotEmpty()
   @IsEmail()
-  email: string;
+  readonly email: string;
 
   @ApiProperty()
   @IsNotEmpty()

@@ -71,7 +71,11 @@ export class EntriesService {
   }
 
   private async create(entriesDto: EntriesCreateDto): Promise<EntriesEntity> {
-    const entriesEntity = this.entriesRepository.create(entriesDto);
-    return await this.entriesRepository.save(entriesEntity);
+    try {
+      const entriesEntity = this.entriesRepository.create(entriesDto);
+      return await this.entriesRepository.save(entriesEntity);
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
   }
 }

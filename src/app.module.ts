@@ -13,7 +13,7 @@ import { UserEntity } from './user/entity';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'mongodb',
       url: process.env.MONGODB_URL,

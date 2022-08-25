@@ -1,5 +1,5 @@
-import { Controller, Get, HttpCode, HttpStatus, Param, Post, Query } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Query } from '@nestjs/common';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiPaginatedResponse } from 'src/common/decorators/api-paginated-response.decorator';
 import { PageDto, PageOptionsDto } from 'src/common/dtos';
 import { EntriesDto } from './dtos/entries.dto';
@@ -25,6 +25,7 @@ export class EntriesController {
   }
 
   @Get('/en/:word')
+  @ApiResponse({ status: 200, description: 'Retornar as informações da palavra especificada e registra o histórico de acesso.' })
   async getEntriesEnWord(@Param('word') word: string): Promise<any> {
     return this.entriesService.getEntriesEnWord(word);
   }
@@ -34,7 +35,7 @@ export class EntriesController {
     return this.entriesService.postFavoriteWord(word);
   }
 
-  @Post('/en/:word/unfavorite')
+  @Delete('/en/:word/unfavorite')
   async postUnfavoriteWord(@Param('word') word: string): Promise<any> {
     return this.entriesService.postUnfavoriteWord(word);
   }

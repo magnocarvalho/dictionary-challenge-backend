@@ -1,5 +1,6 @@
-import { Entity, Column, ObjectIdColumn, BeforeInsert } from 'typeorm';
+import { Entity, Column, ObjectIdColumn, BeforeInsert, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import { HistoryEntity } from 'src/history/entity/history.entity';
 
 @Entity({ name: 'user' })
 export class UserEntity {
@@ -20,4 +21,13 @@ export class UserEntity {
   async validatePassword(password: string): Promise<boolean> {
     return bcrypt.compare(password, this.password);
   }
+
+  @OneToMany(() => HistoryEntity, (hist: HistoryEntity) => hist.user)
+  public history: HistoryEntity[];
+
+  @CreateDateColumn()
+  public createdAt;
+
+  @UpdateDateColumn()
+  public updatedAt;
 }

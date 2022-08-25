@@ -11,6 +11,7 @@ async function bootstrap() {
     .setDescription('Backend API to Challenge full stack develop')
     .setContact('Magno Carvalho dos Santos', 'https://www.linkedin.com/in/magnocarv/', 'magnocarv@hotmail.com')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('doc', app, document);

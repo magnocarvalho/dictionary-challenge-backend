@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { join } from 'path';
 import { EntriesEntity } from './entries/entity';
 import { UserEntity } from './user/entity';
+import { HistoryModule } from './history/history.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { UserEntity } from './user/entity';
     EntriesModule,
     UserModule,
     AuthModule,
+    HistoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

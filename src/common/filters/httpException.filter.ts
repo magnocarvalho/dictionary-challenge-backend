@@ -1,5 +1,6 @@
 import { Catch, ExceptionFilter, ArgumentsHost, HttpException, HttpStatus, Logger } from '@nestjs/common';
-
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const codesHttp = require('http-status-code-json-list');
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
   private readonly logger = new Logger(AllExceptionsFilter.name);
@@ -18,7 +19,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     response.status(status).json({
       timestamp: new Date().toISOString(),
       path: request.url,
-      error: message,
+      ...codesHttp[status],
     });
   }
 }

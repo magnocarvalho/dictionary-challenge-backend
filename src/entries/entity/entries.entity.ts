@@ -1,4 +1,4 @@
-import { Entity, Column, ObjectIdColumn, CreateDateColumn, UpdateDateColumn, OneToMany, ObjectID } from 'typeorm';
+import { Entity, Column, ObjectIdColumn, CreateDateColumn, UpdateDateColumn, OneToMany, ObjectID, PrimaryGeneratedColumn } from 'typeorm';
 
 import { IEntries } from 'src/entries/interface/entries.interface';
 import { IDictionary } from '../interface';
@@ -7,8 +7,8 @@ import { HistoryEntity } from 'src/history/entity/history.entity';
 
 @Entity({ name: 'entries' })
 export class EntriesEntity implements IEntries {
-  @ObjectIdColumn()
-  _id: ObjectID;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({
     nullable: false,
@@ -17,7 +17,9 @@ export class EntriesEntity implements IEntries {
   })
   word: string;
 
-  @Column()
+  @Column({
+    type: 'jsonb',
+  })
   dictionary: IDictionary[];
 
   @CreateDateColumn()

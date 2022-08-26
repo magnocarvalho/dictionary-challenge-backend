@@ -18,7 +18,7 @@ export class HistoryService {
 
   async createHistory(user: UserEntity, dictionary: EntriesEntity): Promise<void> {
     try {
-      const historyEntity = this.historyRepository.create({ userId: user._id.toString(), dictionaryId: dictionary._id.toString() });
+      const historyEntity = this.historyRepository.create({ userId: user.id.toString(), dictionaryId: dictionary.id.toString() });
       await this.historyRepository.save(historyEntity);
     } catch (error) {
       throw new ConflictException(error);
@@ -31,7 +31,7 @@ export class HistoryService {
       if (!historyResult) {
         throw new NotFoundException('History not found');
       }
-      const histDeletado = await this.historyRepository.delete(historyResult._id);
+      const histDeletado = await this.historyRepository.delete(historyResult.id);
       return histDeletado;
     } catch (error) {
       throw new NotFoundException(error);

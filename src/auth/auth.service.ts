@@ -48,9 +48,9 @@ export class AuthService {
    */
   private getAuthUserDto(userNew: UserEntity): AuthUserDto {
     const payload = {
-      userId: userNew._id,
+      userId: userNew.id,
       email: userNew.email,
     };
-    return { id: userNew._id.toString(), name: userNew.name, token: this.jwtService.sign(payload) };
+    return { id: userNew.id.toString(), name: userNew.name, token: this.jwtService.sign(payload) };
   }
 }

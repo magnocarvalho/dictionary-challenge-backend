@@ -1,11 +1,11 @@
-import { Entity, Column, ObjectIdColumn, BeforeInsert, OneToMany, CreateDateColumn, UpdateDateColumn, ObjectID, Index } from 'typeorm';
+import { Entity, Column, ObjectIdColumn, BeforeInsert, OneToMany, CreateDateColumn, UpdateDateColumn, ObjectID, Index, PrimaryGeneratedColumn } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { HistoryEntity } from 'src/history/entity';
 
 @Entity({ name: 'user' })
 export class UserEntity {
-  @ObjectIdColumn()
-  _id: ObjectID;
+  @PrimaryGeneratedColumn()
+  id: number;
   @Column({ type: String, length: 124, nullable: false })
   name: string;
   @Column({ type: String, length: 50, unique: true, nullable: false })

@@ -80,7 +80,7 @@ export class EntriesService {
     if (!exisitngWord) {
       throw new NotFoundException('Word not Exist');
     }
-    const favorite = await this.historyService.findFavorite2Remove(me._id.toString(), exisitngWord._id.toString());
+    const favorite = await this.historyService.findFavorite2Remove(me.id.toString(), exisitngWord.id.toString());
     return favorite;
   }
 

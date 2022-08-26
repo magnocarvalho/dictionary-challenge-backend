@@ -11,5 +11,5 @@ export class ProfileDto {
   @ApiProperty()
   updatedAt: any;
   @ApiProperty()
-  _id: any;
+  id: any;
 }

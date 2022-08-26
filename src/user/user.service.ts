@@ -34,7 +34,7 @@ export class UserService {
   // }
   async getProfileHistory(user: UserAuth, pageOptionsDto: PageOptionsDto): Promise<PageDto<any>> {
     const me = await this.findByEmail(user?.email);
-    const { listagem, qtd } = await this.historyService.getFavorites(me._id.toString(), pageOptionsDto);
+    const { listagem, qtd } = await this.historyService.getFavorites(me.id.toString(), pageOptionsDto);
     return new PageDto(listagem, pageOptionsDto, qtd);
   }
   async getProfileFavorites(user: UserAuth): Promise<any> {
@@ -58,9 +58,9 @@ export class UserService {
     }
   }
 
-  async findById(_id: string) {
+  async findById(id: number): Promise<UserEntity> {
     try {
-      return await this.userRepository.findOne({ where: { _id: new ObjectID(_id) } });
+      return await this.userRepository.findOne({ where: { id: id } });
     } catch (error) {
       throw new PreconditionFailedException(error);
     }

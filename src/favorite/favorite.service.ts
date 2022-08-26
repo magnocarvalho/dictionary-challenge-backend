@@ -15,7 +15,7 @@ export class FavoriteService {
   ) {}
   async createFavorite(user: UserEntity, dictionary: EntriesEntity): Promise<FavoriteEntity> {
     try {
-      const favoriteEntity = this.favoriteRepository.create({ userId: user._id.toString(), dictionaryId: dictionary._id.toString() });
+      const favoriteEntity = this.favoriteRepository.create({ userId: user.id.toString(), dictionaryId: dictionary.id.toString() });
       return await this.favoriteRepository.save(favoriteEntity);
     } catch (error) {
       throw new ConflictException(error);

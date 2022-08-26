@@ -7,7 +7,7 @@ Project backend for the Fullstack Challenge, to create a api to access [Free Dic
 
 ## Documentation API
 
-[Swegger Documentation](https://dictionary-challenge-backend.herokuapp.com/doc)
+[Swagger Documentation](https://dictionary-challenge-backend.herokuapp.com/doc)
 
 ## Description frameworks and libraries
 

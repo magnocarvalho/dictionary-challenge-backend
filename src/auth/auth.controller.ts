@@ -9,13 +9,25 @@ import { SignupDto } from './dtos/signup.dto';
 @ApiTags('Auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
-
+  /**
+   * @description signup user and return JWT token
+   *
+   * @param {SignupDto} bodyUser
+   * @return {*}  {Promise<AuthUserDto>}
+   * @memberof AuthController
+   */
   @Post('/signup')
   @UsePipes(ValidationPipe)
   async signup(@Body() bodyUser: SignupDto): Promise<AuthUserDto> {
     return await this.authService.signup(bodyUser);
   }
-
+  /**
+   * @description Signin user and return JWT token
+   *
+   * @param {SigninDto} bodyUser
+   * @return {*}  {Promise<AuthUserDto>}
+   * @memberof AuthController
+   */
   @Post('/signin')
   @UsePipes(ValidationPipe)
   async signin(@Body() bodyUser: SigninDto): Promise<AuthUserDto> {

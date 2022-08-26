@@ -1,12 +1,9 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PageDto, PageOptionsDto } from 'src/common/dtos';
-import { UserAuth } from 'src/common/interfaces/user.interface';
-import { EntriesDto } from 'src/entries/dtos';
+import { PageOptionsDto } from 'src/common/dtos';
 import { EntriesEntity } from 'src/entries/entity';
-import { EntriesService } from 'src/entries/entries.service';
 import { UserEntity } from 'src/user/entity';
-import { DeleteResult, ObjectID, Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { HistoryEntity } from './entity';
 
 @Injectable()
@@ -16,6 +13,14 @@ export class HistoryService {
     private historyRepository: Repository<HistoryEntity>
   ) {}
 
+  /**
+   * @description Create a new history
+   *
+   * @param {UserEntity} user
+   * @param {EntriesEntity} dictionary
+   * @return {*}  {Promise<void>}
+   * @memberof HistoryService
+   */
   async createHistory(user: UserEntity, dictionary: EntriesEntity): Promise<void> {
     try {
       const historyEntity = this.historyRepository.create({ user: user, dictionary: dictionary });
@@ -25,42 +30,31 @@ export class HistoryService {
     }
   }
 
-  async findFavorite2Remove(userId: string, dictionaryId: string): Promise<DeleteResult> {
-    try {
-      const historyResult = { id: null };
-      // = await this.historyRepository.findOne({ where: { user, dictionaryId: dictionaryId } });
-      if (!historyResult) {
-        throw new NotFoundException('History not found');
-      }
-      const histDeletado = await this.historyRepository.delete(historyResult?.id);
-      return histDeletado;
-    } catch (error) {
-      throw new NotFoundException(error);
-    }
-  }
   /**
-   * get favoritos
+   *  @description get getHistoric
    *
    * @param {string} userId
    * @param {PageOptionsDto} pageOptionsDto
    * @return {*}  {Promise<PageDto<HistoryEntity>>}
    * @memberof HistoryService
    */
-  async getFavorites(userId: string, pageOptionsDto: PageOptionsDto): Promise<{ listagem: HistoryEntity[]; qtd: number }> {
+  async getHistoric(userId: number, pageOptionsDto: PageOptionsDto): Promise<{ listagem: HistoryEntity[]; qtd: number }> {
+    const whereOption = {
+      user: { id: userId },
+      dictionary: undefined,
+    };
+    if (pageOptionsDto.search) {
+      whereOption.dictionary = { word: Like(`%${pageOptionsDto.search}%`) };
+    }
     const [listagem, qtd] = await this.historyRepository.findAndCount({
       order: {
         createdAt: pageOptionsDto.order || 'DESC',
       },
-      // where: { user: { id: userId } },
+      where: whereOption,
+      relations: { dictionary: true },
       skip: pageOptionsDto.page,
       take: pageOptionsDto.limit,
     });
-    /** gambiarra =/ o typeORM e pessimo com MongoBD */
-
-    // eu ja tenho a listagem de favoritos com id vou trazer o valor com o findOne mesmo
-    // const listagem = await this.historyRepository.find({ where: { userId } });
-    // const listagem2 = await this.entriesService.getEntriesList(listagem);
-    // return new PageDto(listagem2, pageOptionsDto, qtd);
     return { listagem: listagem, qtd };
   }
 }

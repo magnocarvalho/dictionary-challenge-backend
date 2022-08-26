@@ -1,6 +1,6 @@
 import { EntriesEntity } from 'src/entries/entity';
 import { UserEntity } from 'src/user/entity';
-import { Entity, CreateDateColumn, UpdateDateColumn, ObjectID, Index, Unique, PrimaryGeneratedColumn, OneToOne, JoinColumn, ManyToMany, ManyToOne } from 'typeorm';
+import { Entity, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, JoinColumn, ManyToOne, DeleteDateColumn } from 'typeorm';
 
 @Entity({ name: 'history' })
 export class HistoryEntity {
@@ -20,4 +20,7 @@ export class HistoryEntity {
   @ManyToOne(() => EntriesEntity, (user) => user.dictionary)
   @JoinColumn()
   dictionary: EntriesEntity;
+
+  @DeleteDateColumn()
+  public deletedAt: Date;
 }

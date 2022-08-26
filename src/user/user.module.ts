@@ -4,9 +4,10 @@ import { UserController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './entity';
 import { HistoryModule } from 'src/history/history.module';
+import { FavoriteModule } from 'src/favorite/favorite.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity]), HistoryModule],
+  imports: [TypeOrmModule.forFeature([UserEntity]), HistoryModule, FavoriteModule],
   providers: [UserService],
   controllers: [UserController],
   exports: [UserService],

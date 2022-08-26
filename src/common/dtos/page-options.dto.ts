@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsEnum, IsInt, IsOptional, Max, Min } from 'class-validator';
+import { IsEnum, IsInt, IsOptional, Max, MaxLength, Min } from 'class-validator';
 import { Order } from '../constants';
 
 export class PageOptionsDto {
@@ -32,7 +32,7 @@ export class PageOptionsDto {
   readonly limit?: number = 10;
 
   @IsOptional()
-  @Max(25)
+  @MaxLength(25)
   @Type(() => String)
   readonly search?: string = null;
 

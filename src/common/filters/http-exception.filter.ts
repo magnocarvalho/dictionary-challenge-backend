@@ -1,4 +1,4 @@
-import { Catch, ExceptionFilter, ArgumentsHost, HttpException, HttpStatus, Logger, HttpCode } from '@nestjs/common';
+import { Catch, ExceptionFilter, ArgumentsHost, HttpException, HttpStatus, Logger } from '@nestjs/common';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const codesHttp = require('http-status-code-json-list');
 @Catch()

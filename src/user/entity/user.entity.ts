@@ -1,4 +1,4 @@
-import { Entity, Column, ObjectIdColumn, BeforeInsert, OneToMany, CreateDateColumn, UpdateDateColumn, ObjectID, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, BeforeInsert, OneToMany, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, DeleteDateColumn } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { HistoryEntity } from 'src/history/entity';
 import { FavoriteEntity } from 'src/favorite/entity';
@@ -34,4 +34,7 @@ export class UserEntity {
 
   @UpdateDateColumn()
   public updatedAt;
+
+  @DeleteDateColumn()
+  public deletedAt: Date;
 }

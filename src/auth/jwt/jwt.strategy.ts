@@ -11,7 +11,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       secretOrKey: process.env.JWT_SECRET,
     });
   }
-
+  /**
+   * @description Validate JWT token
+   *
+   * @param {{ userId: number; email: string }} payload
+   * @return {*}
+   * @memberof JwtStrategy
+   */
   async validate(payload: { userId: number; email: string }) {
     return {
       userId: payload.userId,

@@ -1,8 +1,9 @@
 import { EntriesEntity } from 'src/entries/entity';
 import { UserEntity } from 'src/user/entity';
-import { Entity, Column, ObjectIdColumn, BeforeInsert, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn, ObjectID, Index, OneToOne, JoinColumn, Unique, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, ManyToOne, CreateDateColumn, UpdateDateColumn, JoinColumn, Unique, PrimaryGeneratedColumn, DeleteDateColumn } from 'typeorm';
 
 @Entity({ name: 'favorite' })
+@Unique(['user', 'dictionary'])
 export class FavoriteEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -20,4 +21,7 @@ export class FavoriteEntity {
   @ManyToOne(() => EntriesEntity, (user) => user.dictionary)
   @JoinColumn()
   dictionary: EntriesEntity;
+
+  @DeleteDateColumn()
+  public deletedAt: Date;
 }

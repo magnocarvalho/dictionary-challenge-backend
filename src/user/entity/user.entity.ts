@@ -1,6 +1,7 @@
 import { Entity, Column, ObjectIdColumn, BeforeInsert, OneToMany, CreateDateColumn, UpdateDateColumn, ObjectID, Index, PrimaryGeneratedColumn } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { HistoryEntity } from 'src/history/entity';
+import { FavoriteEntity } from 'src/favorite/entity';
 
 @Entity({ name: 'user' })
 export class UserEntity {
@@ -10,7 +11,7 @@ export class UserEntity {
   name: string;
   @Column({ type: String, length: 50, unique: true, nullable: false })
   email: string;
-  @Column({ type: String, length: 56, nullable: false })
+  @Column({ type: String, nullable: false })
   password: string;
 
   @BeforeInsert()
@@ -22,8 +23,11 @@ export class UserEntity {
     return bcrypt.compare(password, this.password);
   }
 
-  // @OneToMany(() => HistoryEntity, (hist: HistoryEntity) => hist.user)
-  // public history: HistoryEntity[];
+  @OneToMany(() => HistoryEntity, (hist: HistoryEntity) => hist.user)
+  public history: HistoryEntity[];
+
+  @OneToMany(() => FavoriteEntity, (favorite: FavoriteEntity) => favorite.user)
+  public favorite: FavoriteEntity[];
 
   @CreateDateColumn()
   public createdAt;

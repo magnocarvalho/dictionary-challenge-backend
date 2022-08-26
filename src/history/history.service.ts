@@ -18,7 +18,7 @@ export class HistoryService {
 
   async createHistory(user: UserEntity, dictionary: EntriesEntity): Promise<void> {
     try {
-      const historyEntity = this.historyRepository.create({ userId: user.id.toString(), dictionaryId: dictionary.id.toString() });
+      const historyEntity = this.historyRepository.create({ user: user, dictionary: dictionary });
       await this.historyRepository.save(historyEntity);
     } catch (error) {
       throw new ConflictException(error);
@@ -27,11 +27,12 @@ export class HistoryService {
 
   async findFavorite2Remove(userId: string, dictionaryId: string): Promise<DeleteResult> {
     try {
-      const historyResult = await this.historyRepository.findOne({ where: { userId, dictionaryId: dictionaryId } });
+      const historyResult = { id: null };
+      // = await this.historyRepository.findOne({ where: { user, dictionaryId: dictionaryId } });
       if (!historyResult) {
         throw new NotFoundException('History not found');
       }
-      const histDeletado = await this.historyRepository.delete(historyResult.id);
+      const histDeletado = await this.historyRepository.delete(historyResult?.id);
       return histDeletado;
     } catch (error) {
       throw new NotFoundException(error);
@@ -50,7 +51,7 @@ export class HistoryService {
       order: {
         createdAt: pageOptionsDto.order || 'DESC',
       },
-      where: { userId },
+      // where: { user: { id: userId } },
       skip: pageOptionsDto.page,
       take: pageOptionsDto.limit,
     });

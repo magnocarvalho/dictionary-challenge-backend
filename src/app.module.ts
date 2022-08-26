@@ -21,7 +21,7 @@ import { FavoriteEntity } from './favorite/entity';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      database: 'project',
+      database: 'project1',
       username: 'postgres',
       password: 'postgres',
       // url: process.env.MONGODB_URL,

@@ -3,6 +3,7 @@ import { Entity, Column, ObjectIdColumn, CreateDateColumn, UpdateDateColumn, One
 import { IEntries } from 'src/entries/interface/entries.interface';
 import { IDictionary } from '../interface';
 import { HistoryEntity } from 'src/history/entity/history.entity';
+import { FavoriteEntity } from 'src/favorite/entity';
 // import { IDictionary } from '../interfaces/dictionary.interface';
 
 @Entity({ name: 'entries' })
@@ -28,6 +29,9 @@ export class EntriesEntity implements IEntries {
   @UpdateDateColumn()
   public updatedAt;
 
-  // @OneToMany(() => HistoryEntity, (hist: HistoryEntity) => hist.user)
-  // public history: HistoryEntity[];
+  @OneToMany(() => HistoryEntity, (hist: HistoryEntity) => hist.user)
+  public history: HistoryEntity[];
+
+  @OneToMany(() => FavoriteEntity, (favorite: FavoriteEntity) => favorite.user)
+  public favorite: FavoriteEntity[];
 }

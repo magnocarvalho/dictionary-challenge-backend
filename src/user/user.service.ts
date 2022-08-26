@@ -8,6 +8,7 @@ import { AuthenticatedUser, UserAuth } from 'src/common/interfaces/user.interfac
 import { ProfileDto } from 'src/auth/dtos/profile.dto';
 import { PageDto, PageOptionsDto } from 'src/common/dtos';
 import { HistoryService } from 'src/history/history.service';
+import { EntriesService } from 'src/entries/entries.service';
 
 @Injectable()
 export class UserService {

@@ -5,6 +5,7 @@ import { ProfileDto } from 'src/auth/dtos/profile.dto';
 import { JwtAuthGuard } from 'src/auth/jwt';
 import { PageOptionsDto } from 'src/common/dtos';
 import { AuthenticatedUser } from 'src/common/interfaces/user.interface';
+import { EntriesService } from 'src/entries/entries.service';
 import { UserService } from './user.service';
 
 @Controller('user')

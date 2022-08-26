@@ -12,5 +12,6 @@ import { FavoriteModule } from 'src/favorite/favorite.module';
   imports: [TypeOrmModule.forFeature([EntriesEntity]), AuthModule, HistoryModule, UserModule, FavoriteModule],
   providers: [EntriesService],
   controllers: [EntriesController],
+  exports: [EntriesService],
 })
 export class EntriesModule {}
